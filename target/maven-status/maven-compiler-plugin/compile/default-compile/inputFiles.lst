@@ -1,0 +1,11 @@
+/home/tingkai/eclipse-workspace/spring4-mvc-ajax-example/src/main/java/com/mkyong/config/SpringWebConfig.java
+/home/tingkai/eclipse-workspace/spring4-mvc-ajax-example/src/main/java/com/mkyong/web/jsonview/Views.java
+/home/tingkai/eclipse-workspace/spring4-mvc-ajax-example/src/main/java/com/mkyong/web/controller/WelcomeController.java
+/home/tingkai/eclipse-workspace/spring4-mvc-ajax-example/src/main/java/com/mkyong/web/model/MongoInfo.java
+/home/tingkai/eclipse-workspace/spring4-mvc-ajax-example/src/main/java/com/mkyong/web/model/User.java
+/home/tingkai/eclipse-workspace/spring4-mvc-ajax-example/src/main/java/com/mkyong/web/model/AjaxResponseBody.java
+/home/tingkai/eclipse-workspace/spring4-mvc-ajax-example/src/main/java/com/mkyong/servlet3/MyWebInitializer.java
+/home/tingkai/eclipse-workspace/spring4-mvc-ajax-example/src/main/java/com/mkyong/web/controller/MongoController.java
+/home/tingkai/eclipse-workspace/spring4-mvc-ajax-example/src/main/java/com/mkyong/web/model/FileId.java
+/home/tingkai/eclipse-workspace/spring4-mvc-ajax-example/src/main/java/com/mkyong/web/controller/AjaxController.java
+/home/tingkai/eclipse-workspace/spring4-mvc-ajax-example/src/main/java/com/mkyong/web/model/SearchCriteria.java
