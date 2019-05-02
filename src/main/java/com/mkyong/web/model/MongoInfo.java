@@ -2,6 +2,9 @@ package com.mkyong.web.model;
 
 import java.util.Date;
 
+import org.bson.BsonObjectId;
+import org.bson.types.ObjectId;
+
 import com.fasterxml.jackson.annotation.JsonView;
 import com.mkyong.web.jsonview.Views;
 
@@ -42,6 +45,6 @@ public class MongoInfo {
 	
 	@Override
 	public String toString() {
-		return "MongoInfo: {" + this.id + ", " + this.length + ", " + this.uploadDate + ", " + this.filename + "}";
+		return "MongoInfo: {" + this.id.toString() + ", " + this.length + ", " + this.uploadDate + ", " + this.filename + "}";
 	}
 }

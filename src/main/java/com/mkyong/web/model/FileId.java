@@ -1,18 +1,20 @@
 package com.mkyong.web.model;
 
-public class FileId {
-	private String id;
+import org.bson.BsonObjectId;
 
-	public String getId() {
+public class FileId {
+	private BsonObjectId id;
+
+	public BsonObjectId getId() {
 		return id;
 	}
 
-	public void setId(String id) {
+	public void setId(BsonObjectId id) {
 		this.id = id;
 	}
 	
 	@Override
 	public String toString() {
-		return "FileId: {" + this.id + "}";
+		return "FileId: {" + this.id.toString() + "}";
 	}
 }

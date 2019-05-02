@@ -34,55 +34,21 @@
 
 		<div id="feedback"></div>
 
-		<form class="form-horizontal" id="search-form">
-			<div class="form-group">
-				<button type="submit" id="bth-search" class="btn btn-primary btn-lg">Get</button>
-			</div>
-		</form>
+		<div class=btn-group>
+			<button id="infos" class="btn btn-primary btn-lg">List Info</button>
+		</div>
 	</div>
 </div>
 
 <script>
 	jQuery(document).ready(function($) {
-
-		$("#search-form").submit(function(event) {
-
-			// Disble the search button
-			enableSearchButton(false);
-
-			// Prevent the form from submitting via the browser.
+		$("#infos").click(function(event) {
 			event.preventDefault();
-
 			getMongoData();
 		});
-
 	});
 
 	function getMongoData() {
-
-		/*var search = {};
-		search["id"] = "5cc84f5fe7a87459f86985d9";
-
-		$.ajax({
-			type : "POST",
-			contentType : "application/json",
-			url : "${home}mongo/info",
-			data : JSON.stringify(search),
-			dataType : 'json',
-			timeout : 100000,
-			success : function(data) {
-				console.log("SUCCESS: ", data);
-				display(data);
-			},
-			error : function(e) {
-				console.log("ERROR: ", e);
-				display(e);
-			},
-			done : function(e) {
-				console.log("DONE");
-				enableSearchButton(true);
-			}
-		});*/
 		$.ajax({
 			type : "POST",
 			contentType : "application/json",
@@ -99,19 +65,38 @@
 			},
 			done : function(e) {
 				console.log("DONE");
-				enableSearchButton(true);
 			}
 		});
 
 	}
 
-	function enableSearchButton(flag) {
-		$("#btn-search").prop("disabled", flag);
-	}
-
 	function display(data) {
-		var json = "<h4>Ajax Response</h4><pre>"
-				+ JSON.stringify(data, null, 4) + "</pre>";
+		data = data.map(function(obj){
+			obj.length = Math.ceil(obj.length/1024)+" KB";
+			obj.uploadDate = new Date(obj.uploadDate).toLocaleString();;
+			return obj;
+		});
+		var json = "<h4>MongoDB Data</h4>";
+		json += "<table class='table table-striped'>";
+		json += 	"<thead>"
+		json += 		"<tr>";
+		json += 			"<th>id</th>";
+		json += 			"<th>filename</th>";
+		json += 			"<th>upload date</th>";
+		json += 			"<th>size</th>";
+		json += 		"</tr>";
+		json += 	"</thead>";
+		json += 	"<tbody>";
+		for (var i = 0; i < data.length; i++) {
+			json += 	"<tr>";
+			json += 		"<td>"+data[i].id+"</td>";
+			json += 		"<td>"+data[i].filename+"</td>";
+			json += 		"<td>"+data[i].uploadDate+"</td>";
+			json += 		"<td>"+data[i].length+"</td>";
+			json += 	"</tr>";
+		}
+		json += 	"</tbody>"
+		json += "</table>";
 		$('#feedback').html(json);
 	}
 </script>
