@@ -1,0 +1,13 @@
+com\mkyong\web\jsonview\Views.class
+com\mkyong\web\model\User.class
+com\mkyong\web\jsonview\Views$Public.class
+com\mkyong\web\model\FileId.class
+com\mkyong\config\SpringWebConfig.class
+com\mkyong\web\model\MongoInfo.class
+com\mkyong\servlet3\MyWebInitializer.class
+com\mkyong\config\FileConfig.class
+com\mkyong\web\controller\MongoController$1.class
+com\mkyong\web\controller\WelcomeController.class
+com\mkyong\web\model\AjaxResponseBody.class
+com\mkyong\web\model\SearchCriteria.class
+com\mkyong\web\controller\MongoController.class

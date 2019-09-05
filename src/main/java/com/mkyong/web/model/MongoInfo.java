@@ -2,9 +2,6 @@ package com.mkyong.web.model;
 
 import java.util.Date;
 
-import org.bson.BsonObjectId;
-import org.bson.types.ObjectId;
-
 import com.fasterxml.jackson.annotation.JsonView;
 import com.mkyong.web.jsonview.Views;
 

@@ -13,6 +13,10 @@
 <link href="${bootstrapCss}" rel="stylesheet" />
 <link href="${coreCss}" rel="stylesheet" />
 
+<spring:url value="/resources/core/css/main.css"
+	var="mainCss" />
+<link href="${mainCss}" rel="stylesheet" />
+
 <spring:url value="/resources/core/js/jquery.1.10.2.min.js"
 	var="jqueryJs" />
 <script src="${jqueryJs}"></script>
@@ -25,14 +29,14 @@
 <nav class="navbar navbar-inverse">
 	<div class="container">
 		<div class="navbar-header">
-			<a class="navbar-brand" href="#">檔案</a>
+			<a class="navbar-brand" href="#">Spring 4 MVC Ajax Hello World</a>
 		</div>
 	</div>
 </nav>
 
 <div class="container" style="min-height: 500px">
 	<div class="starter-template">
-		<h1>Mongo Test</h1>
+		<h1>新北市議會 資源共享區</h1>
 		<br>
 		<div class=btn-group>
 			<button id="upload" type="button" class="btn btn-primary btn-lg" data-toggle="modal" data-target="#uploadModal">Upload File</button>
@@ -48,13 +52,13 @@
 					</div>
 					<div class="modal-body">
 						<div class="container-fluid">
-							</figure>
-							<b-form-file :state="fileState" accept=".zip" v-model="file" ref="file"></b-form-file>
-							<label id="warnMsg" style="color: red;"></label>
+							<div class="form-group files color">
+								<input id="file" type="file" />
+							</div>
 						</div>
 					</div>
 					<div class="modal-footer">
-						<button type="button" class="btn btn-success" @click="submitModal()">上傳</button>
+						<button id="uploadBtn" type="button" class="btn btn-success">上傳</button>
 						<button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
 					</div>
 				</div>
@@ -66,9 +70,10 @@
 <script type="text/javascript">
 	jQuery(document).ready(function($) {
 		getMongoData();
-		$("#upload").click(function(event) {
-			console.log($("#uploadModal"));
-			$("#uploadModal");
+		$("#uploadBtn").click(function(event) {
+			event.preventDefault();
+			var file = $("#file")[0].files[0];
+			upload(file);
 		});
 	});
 
@@ -124,8 +129,24 @@
 		$('#feedback').html(json);
 	}
 	
-	function openUploadModal() {
-		
+	function upload(file) {
+		var formData = new FormData();
+		formData.append("file", file);
+		$.ajax({
+	        type: "POST",
+	        url: "${home}mongo/upload",
+	        success : function(data) {
+				console.log("SUCCESS: ", data);
+			},
+			error : function(e) {
+				console.log("ERROR: ", e);
+			},
+	        data: formData,
+	        cache: false,
+	        contentType: false,
+	        processData: false,
+	        timeout: 60000
+	    });
 	}
 </script>
 

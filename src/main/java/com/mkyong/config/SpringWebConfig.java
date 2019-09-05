@@ -11,7 +11,7 @@ import org.springframework.web.servlet.view.JstlView;
  
 @EnableWebMvc
 @Configuration
-@ComponentScan({ "com.mkyong.web" })
+@ComponentScan({ "com.mkyong.*" })
 public class SpringWebConfig extends WebMvcConfigurerAdapter {
  
 	@Override
@@ -27,5 +27,4 @@ public class SpringWebConfig extends WebMvcConfigurerAdapter {
 		viewResolver.setSuffix(".jsp");
 		return viewResolver;
 	}
- 
 }
