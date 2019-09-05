@@ -8,7 +8,6 @@
 
 <c:url var="home" value="/" scope="request" />
 
-<spring:url value="/resources/core/css/hello.css" var="coreCss" />
 <spring:url value="/resources/core/css/bootstrap.min.css"
 	var="bootstrapCss" />
 <link href="${bootstrapCss}" rel="stylesheet" />
@@ -17,12 +16,16 @@
 <spring:url value="/resources/core/js/jquery.1.10.2.min.js"
 	var="jqueryJs" />
 <script src="${jqueryJs}"></script>
+
+<spring:url value="/resources/core/js/bootstrap.min.js"
+	var="bootstrapJs" />
+<script src="${bootstrapJs}"></script>
 </head>
 
 <nav class="navbar navbar-inverse">
 	<div class="container">
 		<div class="navbar-header">
-			<a class="navbar-brand" href="#">Spring 4 MVC Ajax Hello World</a>
+			<a class="navbar-brand" href="#">檔案</a>
 		</div>
 	</div>
 </nav>
@@ -31,20 +34,41 @@
 	<div class="starter-template">
 		<h1>Mongo Test</h1>
 		<br>
-
-		<div id="feedback"></div>
-
 		<div class=btn-group>
-			<button id="infos" class="btn btn-primary btn-lg">List Info</button>
+			<button id="upload" type="button" class="btn btn-primary btn-lg" data-toggle="modal" data-target="#uploadModal">Upload File</button>
+		</div>
+		<div id="feedback"></div>
+		<div id="uploadModal" class="modal fade" role="dialog" >
+			<div class="modal-dialog">
+				<div class="modal-content">
+					<div class="modal-header">
+						<h4 class="modal-title">
+							<b>上傳檔案</b>
+						</h4>
+					</div>
+					<div class="modal-body">
+						<div class="container-fluid">
+							</figure>
+							<b-form-file :state="fileState" accept=".zip" v-model="file" ref="file"></b-form-file>
+							<label id="warnMsg" style="color: red;"></label>
+						</div>
+					</div>
+					<div class="modal-footer">
+						<button type="button" class="btn btn-success" @click="submitModal()">上傳</button>
+						<button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+					</div>
+				</div>
+			</div>
 		</div>
 	</div>
 </div>
 
-<script>
+<script type="text/javascript">
 	jQuery(document).ready(function($) {
-		$("#infos").click(function(event) {
-			event.preventDefault();
-			getMongoData();
+		getMongoData();
+		$("#upload").click(function(event) {
+			console.log($("#uploadModal"));
+			$("#uploadModal");
 		});
 	});
 
@@ -98,6 +122,10 @@
 		json += 	"</tbody>"
 		json += "</table>";
 		$('#feedback').html(json);
+	}
+	
+	function openUploadModal() {
+		
 	}
 </script>
 

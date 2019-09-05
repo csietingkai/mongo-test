@@ -1,5 +1,6 @@
 package com.mkyong.web.controller;
 
+import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -25,9 +26,10 @@ import com.mongodb.client.gridfs.model.GridFSFile;
 import com.mongodb.client.model.Filters;
 
 @RestController
+@RequestMapping(value = "/mongo")
 public class MongoController {
 	
-	@RequestMapping(value = "/mongo/list", method = RequestMethod.POST)
+	@RequestMapping(value = "/list", method = RequestMethod.POST)
 	public List<MongoInfo> listFiles() {
 		List<MongoInfo> list = new ArrayList<MongoInfo>();
 
@@ -47,5 +49,15 @@ public class MongoController {
 				});
 		mongoClient.close();
 		return list;
+	}
+	
+	@RequestMapping(value = "/upload", method = RequestMethod.PUT)
+	public boolean upload(@RequestBody InputStream inputStream) {
+		MongoClient mongoClient = new MongoClient();
+		MongoDatabase testDatabase = mongoClient.getDatabase("test");
+		GridFSBucket gridFSBucket = GridFSBuckets.create(testDatabase, "files");
+		//gridFSBucket.uploadFromStream(filename, source);
+		mongoClient.close();
+		return false;
 	}
 }
