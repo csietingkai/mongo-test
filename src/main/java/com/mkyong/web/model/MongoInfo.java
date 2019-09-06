@@ -14,6 +14,8 @@ public class MongoInfo {
 	private Date uploadDate;
 	@JsonView(Views.Public.class)
 	private String filename;
+	@JsonView(Views.Public.class)
+	private String depName;
 	
 	public String getId() {
 		return id;
@@ -38,6 +40,12 @@ public class MongoInfo {
 	}
 	public void setFilename(String filename) {
 		this.filename = filename;
+	}
+	public String getDepName() {
+		return depName;
+	}
+	public void setDepName(String depName) {
+		this.depName = depName;
 	}
 	
 	@Override

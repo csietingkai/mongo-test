@@ -5,9 +5,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.bson.Document;
-import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RequestPart;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
@@ -40,6 +40,7 @@ public class MongoController {
 				        info.setFilename(gridFSFile.getFilename());
 						info.setLength(gridFSFile.getLength());
 						info.setUploadDate(gridFSFile.getUploadDate());
+						info.setDepName(gridFSFile.getMetadata().getString("dep"));
 						list.add(info);
 				    }
 				});
@@ -47,9 +48,10 @@ public class MongoController {
 		return list;
 	}
 	
-	@RequestMapping(value = "/upload", method = RequestMethod.POST, consumes = { "multipart/form-data", MediaType.APPLICATION_JSON_VALUE })
-	public boolean upload(@RequestPart("file") MultipartFile file, @RequestPart("dep") String depName) {
+	@RequestMapping(value = "/upload", method = RequestMethod.POST)
+	public boolean upload(@RequestParam String depName, @RequestPart("file") MultipartFile file) {
 		boolean result = true;
+		
 		MongoClient mongoClient = new MongoClient();
 		MongoDatabase testDatabase = mongoClient.getDatabase("test");
 		GridFSBucket gridFSBucket = GridFSBuckets.create(testDatabase, "files");

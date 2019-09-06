@@ -54,10 +54,6 @@
 						<div class="container-fluid">
 							<label>部門：</label>
 							<select id="deps">
-								<option value="">--請選擇--</option>
-								<option value="secretary">秘書室</option>
-								<option value="computer">資訊室</option>
-								<option value="accountant">會計室</option>
 							</select>
 							<div class="form-group files color">
 								<input id="file" type="file" />
@@ -75,7 +71,18 @@
 </div>
 
 <script type="text/javascript">
+	var deps = [{
+		key: 'secretary',
+		value: '秘書室'
+	}, {
+		key: 'computer',
+		value: '資訊室'
+	}, {
+		key: 'accountant',
+		value: '會計室'
+	}]
 	jQuery(document).ready(function($) {
+		setDepOptions();
 		getMongoData();
 		$("#uploadBtn").click(function(event) {
 			event.preventDefault();
@@ -88,6 +95,15 @@
 			}
 		});
 	});
+	
+	function setDepOptions() {
+		var options = "";
+		options += "<option value=\"\">--請選擇--</option>";
+		for (var i = 0; i < deps.length; i++) {
+			options += "<option value=\"" + deps[i].key + "\">" + deps[i].value + "</option>";
+		}
+		$("#deps").html(options);
+	}
 
 	function getMongoData() {
 		$.ajax({
@@ -117,41 +133,49 @@
 			obj.uploadDate = new Date(obj.uploadDate).toLocaleString();;
 			return obj;
 		});
-		var json = "<h4>MongoDB Data</h4>";
-		json += "<table class='table table-striped'>";
-		json += 	"<thead>"
-		json += 		"<tr>";
-		json += 			"<th>id</th>";
-		json += 			"<th>filename</th>";
-		json += 			"<th>upload date</th>";
-		json += 			"<th>size</th>";
-		json += 		"</tr>";
-		json += 	"</thead>";
-		json += 	"<tbody>";
-		for (var i = 0; i < data.length; i++) {
-			json += 	"<tr>";
-			json += 		"<td>"+data[i].id+"</td>";
-			json += 		"<td>"+data[i].filename+"</td>";
-			json += 		"<td>"+data[i].uploadDate+"</td>";
-			json += 		"<td>"+data[i].length+"</td>";
-			json += 	"</tr>";
+		var json = "";
+		for (var i = 0; i < deps.length; i++) {
+			json += "<h4>" + deps[i].value + "</h4>";
+			json += "<table class='table table-striped'>";
+			json += 	"<thead>";
+			json += 		"<tr>";
+			json += 			"<th>檔案名稱</th>";
+			json += 			"<th>上傳日期</th>";
+			json += 			"<th>檔案大小</th>";
+			json += 		"</tr>";
+			json += 	"</thead>";
+			json += 	"<tbody>";
+			var depData = data.filter(function(item) { return item.depName === deps[i].key; });
+			if (depData.length > 0) {
+				for (var i = 0; i < depData.length; i++) {
+					json += "<tr>";;
+					json += 	"<td>"+depData[i].filename+"</td>";
+					json += 	"<td>"+depData[i].uploadDate+"</td>";
+					json += 	"<td>"+depData[i].length+"</td>";
+					json += "</tr>";
+				}
+			} else {
+				json += 	"<tr>";
+				json += 		"<td colspan=\"3\" align=\"center\">目前無資料</td>";
+				json += 	"</tr>";
+			}
+			json += 	"</tbody>"
+			json += "</table>";			
 		}
-		json += 	"</tbody>"
-		json += "</table>";
 		$('#feedback').html(json);
 	}
 	
 	function upload(file, depName) {
 		var formData = new FormData();
 		formData.append("file", file);
-		formData.append("dep", depName);
 		$.ajax({
 	        type: "POST",
-	        url: "${home}mongo/upload",
+	        url: "${home}mongo/upload?depName="+depName,
 	        success : function(result) {
 				console.log("SUCCESS: ", result);
 				if (result) {
 					alert("上傳成功");
+					getMongoData();
 				}
 			},
 			error : function(e) {
