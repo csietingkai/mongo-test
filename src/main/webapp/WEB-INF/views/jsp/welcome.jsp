@@ -52,6 +52,13 @@
 					</div>
 					<div class="modal-body">
 						<div class="container-fluid">
+							<label>部門：</label>
+							<select id="deps">
+								<option value="">--請選擇--</option>
+								<option value="secretary">秘書室</option>
+								<option value="computer">資訊室</option>
+								<option value="accountant">會計室</option>
+							</select>
 							<div class="form-group files color">
 								<input id="file" type="file" />
 							</div>
@@ -73,7 +80,12 @@
 		$("#uploadBtn").click(function(event) {
 			event.preventDefault();
 			var file = $("#file")[0].files[0];
-			upload(file);
+			var depName = $("#deps :selected").val();
+			if (file && depName) {
+				upload(file, depName);
+			} else {
+				alert("");
+			}
 		});
 	});
 
@@ -129,9 +141,10 @@
 		$('#feedback').html(json);
 	}
 	
-	function upload(file) {
+	function upload(file, depName) {
 		var formData = new FormData();
 		formData.append("file", file);
+		formData.append("dep", depName);
 		$.ajax({
 	        type: "POST",
 	        url: "${home}mongo/upload",
@@ -150,7 +163,7 @@
 	        processData: false,
 	        timeout: 60000
 	    });
-		$("uploadModal").modal('hide');
+		$("#uploadModal").modal('hide');
 	}
 </script>
 

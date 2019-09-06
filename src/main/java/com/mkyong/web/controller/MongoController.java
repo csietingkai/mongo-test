@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.bson.Document;
+import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestPart;
@@ -46,8 +47,8 @@ public class MongoController {
 		return list;
 	}
 	
-	@RequestMapping(value = "/upload", method = RequestMethod.POST)
-	public boolean upload(@RequestPart("file") MultipartFile file) {
+	@RequestMapping(value = "/upload", method = RequestMethod.POST, consumes = { "multipart/form-data", MediaType.APPLICATION_JSON_VALUE })
+	public boolean upload(@RequestPart("file") MultipartFile file, @RequestPart("dep") String depName) {
 		boolean result = true;
 		MongoClient mongoClient = new MongoClient();
 		MongoDatabase testDatabase = mongoClient.getDatabase("test");
@@ -55,7 +56,7 @@ public class MongoController {
 		try (InputStream fileInputStream = file.getInputStream()) {
 			gridFSBucket.uploadFromStream(file.getOriginalFilename(), fileInputStream, 
 					new GridFSUploadOptions().metadata(
-							new Document().append("dep", "")
+							new Document().append("dep", depName)
 					)
 			);
 		} catch (Exception e) {
