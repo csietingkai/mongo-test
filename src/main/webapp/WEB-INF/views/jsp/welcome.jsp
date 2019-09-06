@@ -139,7 +139,7 @@
 			json += "<table class='table table-striped'>";
 			json += 	"<thead>";
 			json += 		"<tr>";
-			json += 			"<th>檔案名稱</th>";
+			json += 			"<th style=\"width: 600px\">檔案名稱</th>";
 			json += 			"<th>上傳日期</th>";
 			json += 			"<th>檔案大小</th>";
 			json += 		"</tr>";
@@ -147,11 +147,11 @@
 			json += 	"<tbody>";
 			var depData = data.filter(function(item) { return item.depName === deps[i].key; });
 			if (depData.length > 0) {
-				for (var i = 0; i < depData.length; i++) {
+				for (var j = 0; j < depData.length; j++) {
 					json += "<tr>";;
-					json += 	"<td>"+depData[i].filename+"</td>";
-					json += 	"<td>"+depData[i].uploadDate+"</td>";
-					json += 	"<td>"+depData[i].length+"</td>";
+					json += 	"<td>"+depData[j].filename+"</td>";
+					json += 	"<td>"+depData[j].uploadDate+"</td>";
+					json += 	"<td>"+depData[j].length+"</td>";
 					json += "</tr>";
 				}
 			} else {
