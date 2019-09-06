@@ -135,8 +135,11 @@
 		$.ajax({
 	        type: "POST",
 	        url: "${home}mongo/upload",
-	        success : function(data) {
-				console.log("SUCCESS: ", data);
+	        success : function(result) {
+				console.log("SUCCESS: ", result);
+				if (result) {
+					alert("上傳成功");
+				}
 			},
 			error : function(e) {
 				console.log("ERROR: ", e);
@@ -147,6 +150,7 @@
 	        processData: false,
 	        timeout: 60000
 	    });
+		$("uploadModal").modal('hide');
 	}
 </script>
 

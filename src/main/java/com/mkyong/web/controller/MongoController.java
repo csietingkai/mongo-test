@@ -1,8 +1,10 @@
 package com.mkyong.web.controller;
 
+import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.bson.Document;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestPart;
@@ -16,6 +18,7 @@ import com.mongodb.client.MongoDatabase;
 import com.mongodb.client.gridfs.GridFSBucket;
 import com.mongodb.client.gridfs.GridFSBuckets;
 import com.mongodb.client.gridfs.model.GridFSFile;
+import com.mongodb.client.gridfs.model.GridFSUploadOptions;
 
 @RestController
 @RequestMapping(value = "/mongo")
@@ -45,11 +48,22 @@ public class MongoController {
 	
 	@RequestMapping(value = "/upload", method = RequestMethod.POST)
 	public boolean upload(@RequestPart("file") MultipartFile file) {
+		boolean result = true;
 		MongoClient mongoClient = new MongoClient();
 		MongoDatabase testDatabase = mongoClient.getDatabase("test");
 		GridFSBucket gridFSBucket = GridFSBuckets.create(testDatabase, "files");
-		//gridFSBucket.uploadFromStream(filename, source);
-		mongoClient.close();
-		return false;
+		try (InputStream fileInputStream = file.getInputStream()) {
+			gridFSBucket.uploadFromStream(file.getOriginalFilename(), fileInputStream, 
+					new GridFSUploadOptions().metadata(
+							new Document().append("dep", "")
+					)
+			);
+		} catch (Exception e) {
+			e.printStackTrace();
+			result = false;
+		} finally {
+			mongoClient.close();
+		}
+		return result;
 	}
 }
