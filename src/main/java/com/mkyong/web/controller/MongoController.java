@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.bson.Document;
+import org.bson.types.ObjectId;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -61,6 +62,24 @@ public class MongoController {
 							new Document().append("dep", depName)
 					)
 			);
+		} catch (Exception e) {
+			e.printStackTrace();
+			result = false;
+		} finally {
+			mongoClient.close();
+		}
+		return result;
+	}
+	
+	@RequestMapping(value = "/delete", method = RequestMethod.DELETE)
+	public boolean delete(@RequestParam String id) {
+		boolean result = true;
+		
+		MongoClient mongoClient = new MongoClient();
+		MongoDatabase testDatabase = mongoClient.getDatabase("test");
+		GridFSBucket gridFSBucket = GridFSBuckets.create(testDatabase, "files");
+		try {
+			gridFSBucket.delete(new ObjectId(id));
 		} catch (Exception e) {
 			e.printStackTrace();
 			result = false;

@@ -11,6 +11,9 @@
 <spring:url value="/resources/core/css/bootstrap.min.css"
 	var="bootstrapCss" />
 <link href="${bootstrapCss}" rel="stylesheet" />
+<spring:url value="/resources/core/css/all.min.css"
+	var="fontawesomeCss" />
+<link href="${fontawesomeCss}" rel="stylesheet" />
 <link href="${coreCss}" rel="stylesheet" />
 
 <spring:url value="/resources/core/css/main.css"
@@ -24,6 +27,10 @@
 <spring:url value="/resources/core/js/bootstrap.min.js"
 	var="bootstrapJs" />
 <script src="${bootstrapJs}"></script>
+
+<spring:url value="/resources/core/js/all.min.js"
+	var="fontawesomeJs" />
+<script src="${fontawesomeJs}"></script>
 </head>
 
 <nav class="navbar navbar-inverse">
@@ -148,15 +155,16 @@
 			var depData = data.filter(function(item) { return item.depName === deps[i].key; });
 			if (depData.length > 0) {
 				for (var j = 0; j < depData.length; j++) {
-					json += "<tr>";;
+					json += "<tr>";
 					json += 	"<td>"+depData[j].filename+"</td>";
 					json += 	"<td>"+depData[j].uploadDate+"</td>";
 					json += 	"<td>"+depData[j].length+"</td>";
+					json += 	"<td><button class=\"btn btn-primary btn-sm\" onclick=\"deleteFile('" + depData[j].id + "')\"><i class=\"fa fa-trash\" aria-hidden=\"true\"></i></button></td>";
 					json += "</tr>";
 				}
 			} else {
 				json += 	"<tr>";
-				json += 		"<td colspan=\"3\" align=\"center\">目前無資料</td>";
+				json += 		"<td colspan=\"4\" align=\"center\">目前無資料</td>";
 				json += 	"</tr>";
 			}
 			json += 	"</tbody>"
@@ -188,6 +196,28 @@
 	        timeout: 60000
 	    });
 		$("#uploadModal").modal('hide');
+	}
+	
+	function deleteFile(id) {
+		$.ajax({
+	        type: "DELETE",
+	        url: "${home}mongo/delete?id="+id,
+	        success : function(result) {
+				console.log("SUCCESS: ", result);
+				if (result) {
+					alert("刪除成功");
+					getMongoData();
+				}
+			},
+			error : function(e) {
+				console.log("ERROR: ", e);
+			},
+			data: null,
+	        cache: false,
+	        contentType: false,
+	        processData: false,
+	        timeout: 60000
+	    });
 	}
 </script>
 
