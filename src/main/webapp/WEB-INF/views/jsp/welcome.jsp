@@ -159,21 +159,21 @@
 					json += 	"<td>"+depData[j].filename+"</td>";
 					json += 	"<td>"+depData[j].uploadDate+"</td>";
 					json += 	"<td>"+depData[j].length+"</td>";
-					json += 	"<td>"
-					json += 		"<div class=\"btn-group\">";
-					json += 			"<button class=\"btn btn-primary btn-sm\" onclick=\"download('" + depData[j].id + "', '" + depData[j].filename + "')\">";
-					json +=					"<i class=\"fa fa-download\" aria-hidden=\"true\"></i>";
-					json +=				"</button>";
-					json += 			"<button class=\"btn btn-primary btn-sm\" onclick=\"deleteFile('" + depData[j].id + "')\">";
-					json +=					"<i class=\"fa fa-trash\" aria-hidden=\"true\"></i>";
-					json +=				"</button>";
-					json += 		"</div>";
-					json += 	"</td>";
+// 					json += 	"<td>"
+// 					json += 		"<div class=\"btn-group\">";
+// 					json += 			"<button class=\"btn btn-primary btn-sm\" onclick=\"download('" + depData[j].id + "', '" + depData[j].filename + "')\">";
+// 					json +=					"<i class=\"fa fa-download\" aria-hidden=\"true\"></i>";
+// 					json +=				"</button>";
+// 					json += 			"<button class=\"btn btn-primary btn-sm\" onclick=\"deleteFile('" + depData[j].id + "')\">";
+// 					json +=					"<i class=\"fa fa-trash\" aria-hidden=\"true\"></i>";
+// 					json +=				"</button>";
+// 					json += 		"</div>";
+// 					json += 	"</td>";
 					json += "</tr>";
 				}
 			} else {
 				json += 	"<tr>";
-				json += 		"<td colspan=\"4\" align=\"center\">目前無資料</td>";
+				json += 		"<td colspan=\"3\" align=\"center\">目前無資料</td>";
 				json += 	"</tr>";
 			}
 			json += 	"</tbody>"
@@ -191,7 +191,7 @@
 	        success : function(result) {
 				console.log("SUCCESS: ", result);
 				if (result) {
-					alert("上傳成功");
+					console.log("上傳成功");
 					getMongoData();
 				}
 			},
@@ -209,22 +209,6 @@
 	
 	function download(id, filename) {
 		window.open("${home}mongo/download?id="+id+"&filename="+filename);
-		/* $.ajax({
-	        type: "POST",
-	        url: "${home}mongo/download?id="+id+"&filename="+filename,
-	        success : function(result) {
-				console.log("SUCCESS: ", result);
-				window.open()
-			},
-			error : function(e) {
-				console.log("ERROR: ", e);
-			},
-			data: null,
-	        cache: false,
-	        contentType: false,
-	        processData: false,
-	        timeout: 60000
-	    });*/
 	}
 	
 	function deleteFile(id) {
@@ -234,7 +218,7 @@
 	        success : function(result) {
 				console.log("SUCCESS: ", result);
 				if (result) {
-					alert("刪除成功");
+					console.log("刪除成功");
 					getMongoData();
 				}
 			},
