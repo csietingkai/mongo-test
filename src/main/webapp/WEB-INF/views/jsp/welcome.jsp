@@ -36,7 +36,7 @@
 <nav class="navbar navbar-inverse">
 	<div class="container">
 		<div class="navbar-header">
-			<a class="navbar-brand" href="#">Spring 4 MVC Ajax Hello World</a>
+			<a class="navbar-brand" href="#"></a>
 		</div>
 	</div>
 </nav>
@@ -45,9 +45,10 @@
 	<div class="starter-template">
 		<h1>新北市議會 資源共享區</h1>
 		<br>
-		<div class=btn-group>
-			<button id="upload" type="button" class="btn btn-primary btn-lg" data-toggle="modal" data-target="#uploadModal">Upload File</button>
+		<div class="btn-group" style="float: right">
+			<button id="upload" type="button" class="btn btn-primary" data-toggle="modal" data-target="#uploadModal">上傳檔案</button>
 		</div>
+		<br>
 		<div id="feedback"></div>
 		<div id="uploadModal" class="modal fade" role="dialog" >
 			<div class="modal-dialog">
@@ -177,7 +178,8 @@
 				json += 	"</tr>";
 			}
 			json += 	"</tbody>"
-			json += "</table>";			
+			json += "</table>";	
+			json += "<br>";
 		}
 		$('#feedback').html(json);
 	}
