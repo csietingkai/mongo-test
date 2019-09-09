@@ -159,7 +159,16 @@
 					json += 	"<td>"+depData[j].filename+"</td>";
 					json += 	"<td>"+depData[j].uploadDate+"</td>";
 					json += 	"<td>"+depData[j].length+"</td>";
-					json += 	"<td><button class=\"btn btn-primary btn-sm\" onclick=\"deleteFile('" + depData[j].id + "')\"><i class=\"fa fa-trash\" aria-hidden=\"true\"></i></button></td>";
+					json += 	"<td>"
+					json += 		"<div class=\"btn-group\">";
+					json += 			"<button class=\"btn btn-primary btn-sm\" onclick=\"download('" + depData[j].id + "', '" + depData[j].filename + "')\">";
+					json +=					"<i class=\"fa fa-download\" aria-hidden=\"true\"></i>";
+					json +=				"</button>";
+					json += 			"<button class=\"btn btn-primary btn-sm\" onclick=\"deleteFile('" + depData[j].id + "')\">";
+					json +=					"<i class=\"fa fa-trash\" aria-hidden=\"true\"></i>";
+					json +=				"</button>";
+					json += 		"</div>";
+					json += 	"</td>";
 					json += "</tr>";
 				}
 			} else {
@@ -196,6 +205,26 @@
 	        timeout: 60000
 	    });
 		$("#uploadModal").modal('hide');
+	}
+	
+	function download(id, filename) {
+		window.open("${home}mongo/download?id="+id+"&filename="+filename);
+		/* $.ajax({
+	        type: "POST",
+	        url: "${home}mongo/download?id="+id+"&filename="+filename,
+	        success : function(result) {
+				console.log("SUCCESS: ", result);
+				window.open()
+			},
+			error : function(e) {
+				console.log("ERROR: ", e);
+			},
+			data: null,
+	        cache: false,
+	        contentType: false,
+	        processData: false,
+	        timeout: 60000
+	    });*/
 	}
 	
 	function deleteFile(id) {
